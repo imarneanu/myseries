@@ -1,7 +1,7 @@
 package com.imarneanu.myseries.page.home;
 
 import com.imarneanu.myseries.R;
-import com.imarneanu.myseries.custom.views.CustomEmptyLayout;
+import com.imarneanu.myseries.custom.CustomEmptyLayout;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
