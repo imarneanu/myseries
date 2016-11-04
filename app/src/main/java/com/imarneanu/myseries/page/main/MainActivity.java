@@ -1,13 +1,19 @@
-package com.imarneanu.myseries;
+package com.imarneanu.myseries.page.main;
+
+import com.imarneanu.myseries.R;
+import com.imarneanu.myseries.page.home.HomeFragment;
+import com.imarneanu.myseries.utils.Utils;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        goToHome();
     }
 
     @Override
@@ -48,5 +56,27 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void switchFragment(@NonNull Fragment fragment) {
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.content_main);
+        if (fragment.getClass().isInstance(currentFragment)) {
+            return;
+        }
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.content_main, fragment, fragment.getTag())
+                .addToBackStack(fragment.getClass().getSimpleName())
+                .commit();
+    }
+
+    public void goToHome() {
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.content_main);
+        if (currentFragment instanceof HomeFragment) {
+            return;
+        }
+        // Clear the existing backStack (if any) because HomeFragment is the default one
+        Utils.clearFullBackStack(this);
+        switchFragment(new HomeFragment());
     }
 }
